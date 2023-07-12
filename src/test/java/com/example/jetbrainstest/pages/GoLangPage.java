@@ -1,7 +1,7 @@
 package com.example.jetbrainstest.pages;
 
 
-import com.example.jetbrainstest.AllureLogger;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +14,7 @@ import java.util.List;
 
 // page_url = https://www.jetbrains.com/go/
 public class GoLangPage {
-    private final AllureLogger LOG = new AllureLogger(LoggerFactory.getLogger(PyCharmPage.class));
+    private final Logger LOG = LoggerFactory.getLogger(IntellijIdeaPage.class);
 
     WebDriver driver;
 
@@ -27,11 +27,13 @@ public class GoLangPage {
     @FindBy(css = "a.follow__link")
     private List<WebElement> followLinks;
 
+    @Step("Проверка активности кнопки загрузки")
     public Boolean checkIfDownloadButtonIsClickable(){
         LOG.info("Проверка активности кнопки загрузки");
         return downloadButton.isEnabled();
     }
 
+    @Step("Проверка наличия текста")
     public String checkTextFreeDays() {
         LOG.info("Проверка наличия текста");
         String value = freeDays.getText();
@@ -39,14 +41,12 @@ public class GoLangPage {
         return value;
     }
 
-    public Boolean checkFollowLinksIsClickable() {
+    @Step("Проверка кликабельности кнопок подписки на иные ресурсы")
+    public Boolean checkFollowLinksIsClickable(){
         LOG.info("Проверка кликабельности кнопок подписки на иные ресурсы");
-        boolean enabled = true;
-        for (WebElement link : followLinks) {
-            LOG.info("Проверка ссылки " + link.getAttribute("href"));
-            enabled &= link.isEnabled();
-        }
-
+        boolean enabled = false;
+        for (WebElement links : followLinks)
+            enabled = links.isEnabled() ? true : false;
         return enabled;
     }
 
