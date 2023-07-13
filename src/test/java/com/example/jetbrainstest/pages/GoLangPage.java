@@ -1,6 +1,7 @@
 package com.example.jetbrainstest.pages;
 
 
+import com.example.jetbrainstest.AllureLogger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,7 +14,7 @@ import java.util.List;
 
 // page_url = https://www.jetbrains.com/go/
 public class GoLangPage {
-    private final Logger LOG = LoggerFactory.getLogger(IntellijIdeaPage.class);
+    private final AllureLogger LOG = new AllureLogger(LoggerFactory.getLogger(PyCharmPage.class));
 
     WebDriver driver;
 
@@ -39,10 +40,10 @@ public class GoLangPage {
     }
 
     public Boolean checkFollowLinksIsClickable() {
-        System.out.println("Проверка кликабельности кнопок подписки на иные ресурсы");
+        LOG.info("Проверка кликабельности кнопок подписки на иные ресурсы");
         boolean enabled = true;
         for (WebElement link : followLinks) {
-            System.out.println("Проверка ссылки " + link.getAttribute("href"));
+            LOG.info("Проверка ссылки " + link.getAttribute("href"));
             enabled &= link.isEnabled();
         }
 
